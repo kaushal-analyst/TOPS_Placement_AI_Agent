@@ -58,20 +58,12 @@ with st.sidebar:
     app_password = st.text_input("Gmail App Password", type="password", value="xkpp uodp qwzk mnvw", help="Use a 16-character App Password")
     
     # Load API Key from Secrets or Environment
-    api_key = ""
     try:
-        if "GEMINI_API_KEY" in st.secrets:
-            api_key = st.secrets["GEMINI_API_KEY"]
-    except Exception:
-        pass
-        
-    if not api_key:
+        api_key = st.secrets["GEMINI_API_KEY"]
+    except:
         api_key = os.getenv("GEMINI_API_KEY", "")
-
-    # Provide a manual input fallback if it's not found in secrets
-    if not api_key:
-        st.warning("Gemini API Key not found in Secrets. Please enter it manually below:")
-        api_key = st.text_input("Gemini API Key", type="password", help="Get this from Google AI Studio")    
+        if not api_key:
+            st.error("Gemini API Key not found. Please set it securely in Streamlit Secrets.")
     location = st.text_input("Preferred Location", value="Ahmedabad")
     manual_role = st.text_input("Target Job Role", placeholder="e.g., Python Developer")
 
