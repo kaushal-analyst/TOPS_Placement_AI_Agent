@@ -63,6 +63,11 @@ with st.sidebar:
     except:
         api_key = os.getenv("GEMINI_API_KEY", "")
         if not api_key:
+            try:
+                api_key = st.secrets["GOOGLE_API_KEY"]
+            except:
+                api_key = os.getenv("GOOGLE_API_KEY", "")
+        if not api_key:
             st.error("Gemini API Key not found. Please set it securely in Streamlit Secrets.")
     location = st.text_input("Preferred Location", value="Ahmedabad")
     manual_role = st.text_input("Target Job Role", placeholder="e.g., Python Developer")
